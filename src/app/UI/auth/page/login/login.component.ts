@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } 
 import { CommonModule } from '@angular/common';
 import { v4 as uuidv4 } from 'uuid';
 import { Router } from '@angular/router';
+import { EncryptDecryptService } from '../../../../infrastructure/helpers/encrypt-decrypt/encrypt-decrypt.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   rememberMe = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router,  private encryptDecryptService: EncryptDecryptService,) {
     this.loginForm = this.fb.group({
       usuario: ['', [Validators.required]],
       password: ['', Validators.required]
@@ -28,8 +29,8 @@ export class LoginComponent {
       const { usuario, password } = this.loginForm.value;
 
       sessionStorage.setItem('currentSesion', JSON.stringify({
-        username: usuario,
-        password: password,
+        username: this.encryptDecryptService.encryptData(usuario),
+        password: this.encryptDecryptService.encryptData(password),
         remenber: this.rememberMe
       }));
 
