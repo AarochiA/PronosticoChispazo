@@ -1,0 +1,32 @@
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh; border-radius: 20px;">
+  <div class="card p-4 shadow-lg" style="width: 100%; max-width: 400px; border-radius: 20px;">
+    <h3 class="text-center mb-4">Iniciar Sesión</h3>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="usuario" class="form-label"><strong>Usuario:</strong></label>
+        <input type="usuario" id="usuario" class="form-control" formControlName="usuario" placeholder="E.j. Constantino_123">
+        <div *ngIf="loginForm.get('usuario')?.invalid && loginForm.get('usuario')?.touched" class="text-danger">
+          Usuario inválido
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label"><strong>Contraseña:</strong></label>
+        <input type="password" id="password" class="form-control" formControlName="password" placeholder="********">
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
+          Contraseña requerida
+        </div>
+      </div>
+
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" style="border-color: rgb(45, 85, 216);" id="remember" [(ngModel)]="rememberMe" [ngModelOptions]="{standalone: true}" name="remember">
+        <label class="form-check-label" for="remember"><strong>Recuérdame</strong></label>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">Entrar</button>
+    </form>
+
+    <br>
+  </div>
+</div>
